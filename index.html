@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard Kinerja Bulanan</title>
+<style>
+:root{--bg:#f6f7f9;--cd:#fff;--tx:#1b2430;--mu:#667085;--bd:#e4e7ec;--sb:#f0f3f6;--ac:#0f6b5c;--g:#12803c;--gb:#e3f4e9;--w:#a15c07;--wb:#fdf1d8;--b:#b42318;--bb:#fde7e5;--c1:#0f6b5c;--c2:#e08a1e;--c3:#8a94a6;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1419;--cd:#171e27;--tx:#e6e9ee;--mu:#97a1b0;--bd:#2a3340;--sb:#1e2733;--ac:#3ec1a8;--g:#4cc56f;--gb:#12301c;--w:#e7b04d;--wb:#3a2c0c;--b:#f08a80;--bb:#3b1713;--c1:#3ec1a8;--c2:#f0a845;--c3:#7d889a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1419;--cd:#171e27;--tx:#e6e9ee;--mu:#97a1b0;--bd:#2a3340;--sb:#1e2733;--ac:#3ec1a8;--g:#4cc56f;--gb:#12301c;--w:#e7b04d;--wb:#3a2c0c;--b:#f08a80;--bb:#3b1713;--c1:#3ec1a8;--c2:#f0a845;--c3:#7d889a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--cd);z-index:10}
+header{background:var(--cd);padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+h1{font-size:18px;margin:0}#pr{color:var(--mu);font-weight:600}
+#up{background:var(--cd);padding:0 16px 14px;border-bottom:1px solid var(--bd)}
+.dz{display:block;border:2px dashed var(--bd);border-radius:12px;padding:22px;text-align:center;cursor:pointer}
+.dz:hover{border-color:var(--ac)}.dz b{display:block;font-size:16px;color:var(--ac)}.dz span{color:var(--mu)}
+.mini .dz{padding:8px;display:inline-block}.mini .dz span{display:none}.mini .dz b{font-size:13px}
+#st{display:inline-block;margin:8px 0 0 8px;color:var(--mu)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;display:flex;gap:4px;overflow-x:auto;background:var(--cd);padding:0 12px;border-bottom:1px solid var(--bd)}
+nav button{border:0;background:none;color:var(--mu);padding:11px 12px;font:inherit;font-weight:600;white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent}
+nav button.on{color:var(--ac);border-color:var(--ac)}
+main{max-width:1200px;margin:0 auto;padding:16px}
+.kg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-bottom:16px}
+.k,.cd,.nc{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.kt{color:var(--mu);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}.kv{font-size:22px;font-weight:700;margin:2px 0 6px}
+.kr{display:flex;justify-content:space-between;gap:6px;font-size:12px;color:var(--mu);margin-top:3px;align-items:center}
+.pb{height:6px;background:var(--sb);border-radius:3px;overflow:hidden}.pb i{display:block;height:100%;background:var(--ac)}
+.bg{padding:1px 8px;border-radius:99px;font-weight:700;font-size:12px;background:var(--sb);color:var(--mu);white-space:nowrap}
+.bg.g{background:var(--gb);color:var(--g)}.bg.w{background:var(--wb);color:var(--w)}.bg.b{background:var(--bb);color:var(--b)}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-bottom:16px}
+.cd h3,.sh{margin:0 0 8px;font-size:14px}.sh{margin:18px 0 8px}.cv{position:relative;height:300px}
+.ng{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}.nc h4{margin:0 0 4px;color:var(--ac)}.nc p{margin:0}
+.seg{display:inline-flex;border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.seg button{border:0;background:var(--cd);color:var(--tx);padding:7px 14px;font:inherit;cursor:pointer}.seg button.on{background:var(--ac);color:#fff}
+.tw{overflow-x:auto;background:var(--cd);border:1px solid var(--bd);border-radius:12px;margin-bottom:16px}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:7px 10px;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}
+th{background:var(--sb);color:var(--mu);font-size:12px}td:first-child{white-space:normal;min-width:180px}
+.nt td:not(:first-child),.nt th:not(:first-child){text-align:right}
+.tt td{font-weight:700;background:var(--sb)}.hd td{font-weight:700;color:var(--ac);padding-top:12px}.neg{color:var(--b)}
+.up{color:var(--ac)}.dn{color:var(--w)}
+.em{padding:40px 16px;text-align:center;color:var(--mu)}
+.fl{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}.fl select,.fl input{padding:7px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--cd);color:var(--tx);font:inherit}
+</style></head><body>
+<header><h1>Dashboard Kinerja Bulanan</h1><div id="pr"></div></header>
+<section id="up"><label class="dz" for="fi"><b>Upload file Excel laporan kinerja</b><span>Klik di sini atau seret file .xlsx ke halaman ini. File dibaca di browser Anda dan tidak dikirim ke server mana pun.</span></label><input id="fi" type="file" accept=".xlsx,.xlsm,.xls" hidden><span id="st"></span></section>
+<nav id="tabs"></nav><main id="view"><div class="em">Belum ada data. Upload file laporan kinerja (.xlsx) di atas, dashboard akan tampil otomatis.</div></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<script>
+const M=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const $=s=>document.querySelector(s);
+let S={},mode='m',tab=0,CH=[],PO=[],P='';
+const isN=v=>typeof v==='number'&&isFinite(v);
+const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const ff=v=>isN(v)?Math.round(v).toLocaleString('id-ID'):'-';
+const fj=v=>isN(v)?(v/1e6).toLocaleString('id-ID',{maximumFractionDigits:0}):'-';
+const rp=v=>{if(!isN(v))return'-';const a=Math.abs(v),z=x=>x.toFixed(2).replace('.',',');return(v<0?'-':'')+'Rp '+(a>=1e12?z(a/1e12)+' T':a>=1e9?z(a/1e9)+' M':a>=1e6?(a/1e6).toFixed(1).replace('.',',')+' jt':ff(a))};
+const pc=(v,d)=>isN(v)?v.toFixed(d==null?1:d).replace('.',',')+'%':'-';
+const bd=(v,c)=>{if(!isN(v))return'<span class="bg">-</span>';const k=c?(v<=100?'g':v<=110?'w':'b'):(v>=100?'g':v>=85?'w':'b');return`<span class="bg ${k}">${pc(v)}</span>`};
+const lab=r=>String(r.find(x=>typeof x==='string'&&x.trim())||'').trim();
+const T=(r,i)=>String((r&&r[i])||'').trim();
+const nod=n=>`<div class="em">Sheet ${n} tidak ditemukan atau strukturnya berbeda di file ini.</div>`;
+const kc=(t,v,s)=>`<div class="k"><div class="kt">${t}</div><div class="kv">${v}</div><div class="kr">${s}</div></div>`;
+const cv=id=>`<div class="cv"><canvas id="${id}"></canvas></div>`;
+const seg=()=>`<div class="seg"><button data-m="m" class="${mode=='m'?'on':''}">Bulan ini</button><button data-m="s" class="${mode=='s'?'on':''}">s.d. bulan ini</button></div>`;
+const tbl=(h,b,c)=>`<div class="tw"><table class="${c||'nt'}"><thead><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${b}</tbody></table></div>`;
+const dl=x=>x>0?`<span class="up">▲ ${ff(x)}</span>`:x<0?`<span class="dn">▼ ${ff(-x)}</span>`:'-';
+const cs=()=>{const g=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();return[g('--c1'),g('--c2'),g('--c3'),g('--b'),g('--w'),'#9b6bd1','#2b8cbe']};
+const ch=(id,cfg)=>{const e=document.getElementById(id);if(e&&window.Chart)CH.push(new Chart(e,cfg))};
+const bar=(id,lb,ds,o)=>{o=o||{};const c=cs();ch(id,{type:o.t||'bar',data:{labels:lb,datasets:ds.map((d,i)=>({label:d[0],data:d[1],backgroundColor:c[i],borderColor:c[i],tension:.3,...(o.line===i?{type:'line'}:{})}))},options:{indexAxis:o.x,responsive:true,maintainAspectRatio:false,layout:{padding:{top:20,right:o.x?40:12}},plugins:{legend:{display:ds.length>1},datalabels:{color:o.st?'#fff':window.TX,anchor:o.st?'center':'end',align:o.st?'center':'end',clip:false,font:{size:11,weight:'600'},formatter:nf,display:c=>{const v=c.dataset.data[c.dataIndex];return isN(v)&&(o.st?Math.abs(v)>=0.5:v!==0)}}},scales:o.st?{x:{stacked:true},y:{stacked:true}}:{}}})};
+const dn=(id,lb,d)=>ch(id,{type:'doughnut',data:{labels:lb,datasets:[{data:d,backgroundColor:cs(),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'},datalabels:{color:'#fff',font:{size:11,weight:'700'},formatter:(v,c)=>nf(v)+' ('+(v/c.dataset.data.reduce((a,b)=>a+b,0)*100).toFixed(0)+'%)',display:c=>{const d=c.dataset.data;return d[c.dataIndex]/d.reduce((a,b)=>a+b,0)>=0.05}}}}});
+const nf=v=>isN(v)?(Math.abs(v)>=100?Math.round(v).toLocaleString('id-ID'):v.toLocaleString('id-ID',{maximumFractionDigits:2})):'';
+const hl=s=>esc(s).replace(/(Rp\. [\d.]+)/g,'<b>$1</b>').replace(/(\d+%)/g,'<b>$1</b>');
+
+function load(buf){const wb=XLSX.read(buf,{type:'array'});S={};
+ const k={ik:/ikhtisar/i,lr:/^lr$/i,kt:/kontrak/i,tk:/^tk$/i,cf:/^cf$/i,ar:/^ar$/i,ab:/^ab$/i,nc:/^nc$/i,rs:/^rs$/i};
+ wb.SheetNames.forEach(n=>{for(const x in k)if(k[x].test(n.trim())){const w=wb.Sheets[n];if(!w['!ref'])continue;const g=XLSX.utils.decode_range(w['!ref']);g.s.c=0;g.s.r=0;S[x]=XLSX.utils.sheet_to_json(w,{header:1,range:g,raw:true,defval:null,blankrows:true})}})}
+
+const lrRow=re=>(S.lr||[]).find(r=>typeof r[0]==='string'&&re.test(r[0].trim()));
+const pick=(r,m)=>{if(!r)return{};const o=m==='m'?2:7;return{rk:r[o],re:r[o+1],ly:r[o+2],p:r[o+3],pl:r[o+4]}};
+const KP=[['Pendapatan',/^TOTAL PENDAPATAN/i],['Beban Pokok Pendapatan',/^TOTAL BEBAN POKOK/i,1],['Laba Kotor',/^LABA KOTOR/i],['Biaya Adm. & Umum',/^BIAYA ADMINISTRASI/i,1],['Laba Usaha',/^LABA USAHA/i],['Laba Setelah Pajak',/^LABA SETELAH PAJAK/i],['EBITDA',/^EBITDA$/i]];
+
+function vRing(){if(!S.lr)return nod('LR');let k='';const lb=[],a=[],b=[],c=[];
+ KP.forEach(([t,re,co])=>{const o=pick(lrRow(re),mode);if(!isN(o.re))return;lb.push(t);a.push(o.rk/1e9);b.push(o.re/1e9);c.push(o.ly/1e9);
+  k+=`<div class="k"><div class="kt">${t}</div><div class="kv">${rp(o.re)}</div><div class="pb"><i style="width:${Math.min(o.p||0,100)}%"></i></div><div class="kr"><span>vs RKAP ${rp(o.rk)}</span>${bd(o.p,co)}</div><div class="kr"><span>vs tahun lalu ${rp(o.ly)}</span>${bd(o.pl,co)}</div></div>`});
+ let n='',t=null;(S.ik||[]).forEach(r=>{const s=typeof r[2]==='string'?r[2].trim():'';if(!s)return;if(/^Realisasi/.test(s)&&t){n+=`<div class="nc"><h4>${esc(t)}</h4><p>${hl(s)}</p></div>`;t=null}else if(s===s.toUpperCase()&&s.length<40&&!/^BULAN|^PT/.test(s))t=s});
+ PO.push(()=>bar('c1',lb,[['RKAP',a],['Realisasi',b],['Tahun lalu',c]]));
+ return seg()+`<div class="kg">${k}</div><div class="cd"><h3>RKAP vs Realisasi vs Tahun Lalu (Rp miliar)</h3>${cv('c1')}</div>`+(n?`<h3 class="sh">Narasi Ikhtisar Kinerja</h3><div class="ng">${n}</div>`:'')}
+
+function segRows(R,st){const i=R.findIndex(r=>T(r,0)===st),o=[];if(i<0)return o;for(let j=i+1;j<R.length&&!/^TOTAL/i.test(T(R[j],0));j++)if(isN(R[j][1]))o.push(R[j]);return o}
+function vLR(){const R=S.lr;if(!R)return nod('LR');const o=mode==='m'?2:7;let h='';
+ R.forEach((r,i)=>{if(i<5)return;const l=T(r,0);if(!l)return;const v=[r[o],r[o+1],r[o+2]],has=v.some(isN),mg=/margin/i.test(l),z=!v[0]&&!v[1],co=/BEBAN|BIAYA/i.test(l);
+  const f=x=>!isN(x)?'':mg?pc(x*100):ff(x),sh=has&&!mg&&!z;
+  h+=`<tr class="${has?(/^[A-Z0-9 &().-]+$/.test(l)&&l.length>3?'tt':''):'hd'}"><td>${esc(l)}</td><td>${f(v[0])}</td><td>${f(v[1])}</td><td>${f(v[2])}</td><td>${sh?bd(r[o+3],co):''}</td><td>${sh?bd(r[o+4],co):''}</td></tr>`});
+ const pd=segRows(R,'PENDAPATAN'),bb=segRows(R,'BEBAN POKOK PENDAPATAN'),nm=x=>x.map(r=>T(r,0).replace('Jasa ',''));
+ PO.push(()=>{bar('c1',nm(pd),[['RKAP',pd.map(r=>r[o]/1e9)],['Realisasi',pd.map(r=>r[o+1]/1e9)],['Tahun lalu',pd.map(r=>r[o+2]/1e9)]]);dn('c2',nm(pd),pd.map(r=>r[o+1]/1e9));bar('c3',nm(bb),[['RKAP',bb.map(r=>r[o]/1e9)],['Realisasi',bb.map(r=>r[o+1]/1e9)],['Tahun lalu',bb.map(r=>r[o+2]/1e9)]])});
+ return seg()+`<div class="g2"><div class="cd"><h3>Pendapatan per jasa (Rp miliar)</h3>${cv('c1')}</div><div class="cd"><h3>Komposisi pendapatan realisasi</h3>${cv('c2')}</div></div><div class="cd" style="margin-bottom:16px"><h3>Beban pokok per jasa (Rp miliar)</h3>${cv('c3')}</div>`+tbl(['Uraian (Rp)','RKAP','Realisasi','Tahun lalu','% RKAP','% thn lalu'],h)}
+
+function blocks(){const R=S.kt||[],b=[];R.forEach((r,i)=>{if(typeof r[0]==='string'&&typeof r[1]==='string'&&/^S\.?\s?D/i.test(String(r[6]||'')))b.push({n:r[0].trim(),i})});b.forEach((x,k)=>x.e=k+1<b.length?b[k+1].i:R.length);return b}
+const bf=(R,x,re)=>R.slice(x.i,x.e).find(r=>re.test(T(r,0)));
+function vKt(){const R=S.kt;if(!R)return nod('LR KONTRAK');const bl=blocks(),o=mode==='m'?1:6;if(!bl.length)return nod('LR KONTRAK');
+ const rows=bl.map(x=>{const g=re=>{const r=bf(R,x,re);return r?{rk:r[o],re:r[o+1],p:r[o+3]}:{}},t=bf(R,x,/^TOTAL TENAGA/i);return{n:x.n,vl:g(/^Volume/i),pd:g(/^Pendapatan$/i),bb:g(/^TOTAL BEBAN/i),lb:g(/^LABA/i),tk:t?t[2]:null}}).sort((a,b)=>(b.pd.re||0)-(a.pd.re||0));
+ const top=rows.slice(0,12);
+ PO.push(()=>{bar('c1',top.map(r=>r.n),[['Pendapatan',top.map(r=>(r.pd.re||0)/1e9)],['Laba operasi',top.map(r=>(r.lb.re||0)/1e9)]],{x:'y'});
+  $('#ks').onchange=det;det()});
+ window.det=function(){const x=bl[$('#ks').value];let h='';R.slice(x.i+5,x.e).forEach(r=>{const l=T(r,0);if(!l)return;const v=[1,2,3,4,6,7,8,9].map(i=>r[i]);if(!v.some(isN)){h+=`<tr class="hd"><td colspan="9">${esc(l)}</td></tr>`;return}const mg=/margin/i.test(l);
+  h+=`<tr class="${/^[A-Z( )&]+$/.test(l)?'tt':''}"><td>${esc(l)}</td>${v.map((a,i)=>`<td>${!isN(a)?'':mg?pc(a*100):(i==3||i==7)?pc(a):ff(a)}</td>`).join('')}</tr>`});
+  $('#det').innerHTML=tbl(['Uraian','Bln RKAP','Bln Real','Bln Thn lalu','Bln %','s.d. RKAP','s.d. Real','s.d. Thn lalu','s.d. %'],h)};
+ return seg()+`<div class="cd" style="margin-bottom:16px"><h3>12 kontrak terbesar: pendapatan dan laba operasi realisasi (Rp miliar)</h3><div class="cv" style="height:420px"><canvas id="c1"></canvas></div></div>`
+ +tbl(['Kontrak','Volume','Pendapatan (Rp)','% RKAP','Beban Pokok (Rp)','Laba Operasi (Rp)','% RKAP','TK'],rows.map(r=>`<tr><td>${esc(r.n)}</td><td>${ff(r.vl.re)}</td><td>${ff(r.pd.re)}</td><td>${bd(r.pd.p)}</td><td>${ff(r.bb.re)}</td><td class="${r.lb.re<0?'neg':''}">${ff(r.lb.re)}</td><td>${bd(r.lb.p)}</td><td>${ff(r.tk)}</td></tr>`).join(''))
+ +`<h3 class="sh">Detail laba rugi per kontrak</h3><div class="fl"><select id="ks">${bl.map((x,i)=>`<option value="${i}">${esc(x.n)}</option>`).join('')}</select></div><div id="det"></div>`}
+
+function vTK(){const R=S.tk;if(!R)return nod('TK');
+ const d=R.filter(r=>isN(r[0])&&typeof r[1]==='string'&&r.slice(2).some(isN));
+ const lr=n=>R.filter(r=>lab(r)===n).pop(),vl=r=>r?r.filter(isN):[];
+ const tt=vl(lr('Total'));while(tt.length&&!tt[tt.length-1])tt.pop();const n=tt.length;if(!n)return nod('TK (ringkasan)');
+ const pt=vl(lr('PKWTT')).slice(0,n),pk=vl(lr('PKWT')).slice(0,n),L=n-1,col=(r,m,k)=>(r[2+2*m+k]||0);
+ const rows=d.map(r=>({n:r[1],a:col(r,L,0),b:col(r,L,1),p:L>0?col(r,L-1,0)+col(r,L-1,1):0})).map(r=>({...r,t:r.a+r.b})).filter(r=>r.t>0||r.p>0).sort((a,b)=>b.t-a.t);
+ PO.push(()=>{bar('c1',M.slice(0,n),[['PKWTT',pt],['PKWT',pk],['Total',tt]],{t:'line'});const t=rows.slice(0,10);bar('c2',t.map(r=>r.n.slice(0,28)),[['PKWTT',t.map(r=>r.a)],['PKWT',t.map(r=>r.b)]],{x:'y',st:1})});
+ const pv=x=>L>0?` <span class="kr">${dl(x[L]-x[L-1])} vs bln lalu</span>`:'';
+ return `<div class="kg">${kc('Total tenaga kerja',ff(tt[L]),dl(tt[L]-(tt[L-1]||tt[L]))+' vs bulan lalu')}${kc('TK Tetap (PKWTT)',ff(pt[L]),dl(pt[L]-(pt[L-1]||pt[L]))+' vs bulan lalu')}${kc('TK Tidak Tetap (PKWT)',ff(pk[L]),dl(pk[L]-(pk[L-1]||pk[L]))+' vs bulan lalu')}${kc('Kontrak aktif',ff(rows.filter(r=>r.t>0).length),'dengan TK bulan ini')}</div>`
+ +`<div class="g2"><div class="cd"><h3>Tren tenaga kerja ${M[0]}–${M[L]}</h3>${cv('c1')}</div><div class="cd"><h3>10 kontrak dengan TK terbanyak (${M[L]})</h3>${cv('c2')}</div></div>`
+ +tbl(['Kontrak','PKWTT','PKWT','Total','Selisih vs bln lalu'],rows.map(r=>`<tr><td>${esc(r.n)}</td><td>${ff(r.a)}</td><td>${ff(r.b)}</td><td><b>${ff(r.t)}</b></td><td>${dl(r.t-r.p)}</td></tr>`).join(''))}
+
+function vCF(){const R=S.cf;if(!R)return nod('CF');const hi=R.findIndex(r=>/^u\s*r\s*a\s*i\s*a\s*n/i.test(T(r,2)));if(hi<0)return nod('CF');
+ const H=R[hi];let ti=H.findIndex((x,i)=>i>3&&/total/i.test(String(x||'')));if(ti<0)ti=H.length-1;
+ const nm=r=>T(r,3)||T(r,2),hasN=(r,c)=>c.some(i=>isN(r[i]));let cols=[];for(let i=4;i<ti;i++)cols.push(i);
+ const find=re=>R.find((r,i)=>i>hi&&re.test(nm(r))&&hasN(r,cols)),kas=find(/^KAS DAN SETARA KAS AKHIR/i);
+ let la=cols.length-1;if(kas)while(la>0&&!kas[cols[la]])la--;cols=cols.slice(0,la+1);
+ const ops=find(/^ARUS KAS DARI AKTIVITAS OPERASI/i),inv=find(/^ARUS KAS UNTUK AKTIVITAS INVESTASI/i),fin=find(/^ARUS KAS UNTUK AKTIVITAS PENDANAAN/i),nk=find(/^KENAIKAN/i),pl=find(/^Penerimaan dari Pelanggan/i);
+ const g=r=>cols.map(c=>r?(r[c]||0)/1e9:0),Lc=cols[cols.length-1];
+ PO.push(()=>bar('c1',cols.map((c,i)=>M[i]),[['Operasi',g(ops)],['Investasi',g(inv)],['Pendanaan',g(fin)],['Kas akhir',g(kas)]],{line:3}));
+ let h='';R.forEach((r,i)=>{if(i<=hi)return;const l=nm(r);if(!l)return;const a=[...cols,ti],has=hasN(r,a),sub=!T(r,3);
+  h+=has?`<tr class="${sub?'tt':''}"><td>${esc(l)}</td>${a.map(c=>`<td class="${isN(r[c])&&r[c]<0?'neg':''}">${fj(r[c])}</td>`).join('')}</tr>`:`<tr class="hd"><td colspan="${a.length+1}">${esc(l)}</td></tr>`});
+ return `<div class="kg">${kc('Kas akhir periode',rp(kas&&kas[Lc]),'posisi '+M[cols.length-1])}${kc('Arus kas operasi bulan ini',rp(ops&&ops[Lc]),'kumulatif '+rp(ops&&ops[ti]))}${kc('Penerimaan dari pelanggan',rp(pl&&pl[Lc]),'kumulatif '+rp(pl&&pl[ti]))}${kc('Kenaikan (penurunan) kas',rp(nk&&nk[Lc]),'kumulatif '+rp(nk&&nk[ti]))}</div>`
+ +`<div class="cd" style="margin-bottom:16px"><h3>Arus kas per aktivitas dan kas akhir (Rp miliar)</h3>${cv('c1')}</div>`
+ +tbl(['Uraian (Rp juta)',...cols.map((c,i)=>M[i]),'Total'],h)}
+
+function vAR(){const R=S.ar;if(!R)return nod('AR');const hi=R.findIndex(r=>T(r,3)==='URAIAN');if(hi<0)return nod('AR');
+ const nm=['Belum Jatuh Tempo','1 - 30','31 - 60','61 - 90','> 90'],rows=nm.map(n=>R.find((r,i)=>i>hi&&T(r,3)===n)||[]),tot=R.find((r,i)=>i>hi&&T(r,3)==='Jumlah')||[];
+ const Tc=c=>isN(tot[c])?tot[c]:rows.reduce((a,r)=>a+(isN(r[c])?r[c]:0),0);const cs2=[];for(let c=4;c<16;c++)if(Tc(c)>0)cs2.push(c);if(!cs2.length)return nod('AR (data)');
+ const Lc=cs2[cs2.length-1],Pc=cs2[cs2.length-2],v=(r,c)=>isN(r[c])?r[c]:0,tl=Tc(Lc);
+ PO.push(()=>{bar('c1',cs2.map(c=>M[c-4]),rows.map((r,i)=>[nm[i]+(i?' hari':''),cs2.map(c=>v(r,c)/1e9)]),{st:1});dn('c2',nm,rows.map(r=>v(r,Lc)/1e9))});
+ let rt='';R.forEach(r=>{if(!isN(r[22]))return;const l=[r[18],r[19],r[20],r[21]].filter(x=>x!=null&&String(x).trim()!=='').map(x=>String(x).trim()).join(' ');rt+=`<tr class="${/total/i.test(l)?'tt':''}"><td>${esc(l)}</td><td>${ff(r[22])}</td></tr>`});
+ const sf=r=>`${pc(v(r,Lc)/tl*100)}`;
+ return `<div class="kg">${kc('Total piutang usaha',rp(tl),Pc!=null?dl(tl-Tc(Pc)).replace(/(\d[\d.]*)/,x=>rp(+x.replace(/\./g,'')))+' vs bulan lalu':'')}${kc('Piutang > 90 hari',rp(v(rows[4],Lc)),pc(v(rows[4],Lc)/tl*100)+' dari total')}${kc('Belum jatuh tempo',rp(v(rows[0],Lc)),pc(v(rows[0],Lc)/tl*100)+' dari total')}</div>`
+ +`<div class="g2"><div class="cd"><h3>Umur piutang per bulan (Rp miliar)</h3>${cv('c1')}</div><div class="cd"><h3>Komposisi umur piutang ${M[Lc-4]}</h3>${cv('c2')}</div></div>`
+ +tbl(['Umur piutang (Rp miliar)',...cs2.map(c=>M[c-4]),'% '+M[Lc-4]],rows.map((r,i)=>`<tr><td>${nm[i]}</td>${cs2.map(c=>`<td>${(v(r,c)/1e9).toFixed(2).replace('.',',')}</td>`).join('')}<td>${sf(r)}</td></tr>`).join('')+`<tr class="tt"><td>Jumlah</td>${cs2.map(c=>`<td>${(Tc(c)/1e9).toFixed(2).replace('.',',')}</td>`).join('')}<td>100%</td></tr>`)
+ +(rt?`<h3 class="sh">Posisi piutang (Bendahara dan Verifikasi, Rp)</h3>`+tbl(['Uraian','Nilai'],rt):'')}
+
+const yr=v=>isN(v)&&v>3000?new Date(Math.round((v-25569)*864e5)).getUTCFullYear():(v||'');
+function vAB(){const R=S.ab;if(!R)return nod('AB');const hi=R.findIndex(r=>T(r,0)==='NO.');if(hi<0)return nod('AB');
+ const d=R.slice(hi+1).filter(r=>isN(r[0])&&(r[1]||r[2])),st=r=>T(r,7)||'-',cnt=f=>d.filter(f).length;
+ const sc={},lc={};d.forEach(r=>{sc[st(r)]=(sc[st(r)]||0)+1;const l=T(r,6)||'-';lc[l]=(lc[l]||0)+1});const lt=Object.entries(lc).sort((a,b)=>b[1]-a[1]).slice(0,8);
+ PO.push(()=>{dn('c1',Object.keys(sc),Object.values(sc));bar('c2',lt.map(x=>x[0]),[['Unit',lt.map(x=>x[1])]],{x:'y'});
+  const f=()=>{const s=$('#fs').value,q=$('#fq').value.toLowerCase(),x=d.filter(r=>(!s||st(r)===s)&&(!q||r.join(' ').toLowerCase().includes(q)));$('#fc').textContent=x.length+' unit';
+   $('#fb').innerHTML=x.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${yr(r[4])}</td><td style="text-align:right">${ff(r[5])}</td><td>${esc(T(r,6))}</td><td><span class="bg ${st(r)=='Baik'?'g':st(r)=='Rusak'?'b':'w'}">${esc(st(r))}</span></td><td>${esc(T(r,8))}</td></tr>`).join('')};
+  $('#fs').onchange=f;$('#fq').oninput=f;f()});
+ return `<div class="kg">${kc('Total alat',ff(d.length),'terdaftar')}${kc('Kondisi baik',ff(sc.Baik||0),pc((sc.Baik||0)/d.length*100))}${kc('Rusak',ff(sc.Rusak||0),pc((sc.Rusak||0)/d.length*100))}${kc('Usul / daftar lelang',ff(cnt(r=>/lelang/i.test(st(r)))),'tidak beroperasi')}${kc('Total nilai buku',rp(d.reduce((a,r)=>a+(isN(r[5])?r[5]:0),0)),'')}</div>`
+ +`<div class="g2"><div class="cd"><h3>Status alat berat</h3>${cv('c1')}</div><div class="cd"><h3>Jumlah unit per lokasi (8 teratas)</h3>${cv('c2')}</div></div>`
+ +`<div class="fl"><select id="fs"><option value="">Semua status</option>${Object.keys(sc).map(s=>`<option>${esc(s)}</option>`).join('')}</select><input id="fq" placeholder="Cari nama, lokasi, masalah…"><span id="fc" style="align-self:center;color:var(--mu)"></span></div>`
+ +tbl(['No','Kode','Nama alat','Tahun','Nilai buku (Rp)','Lokasi','Status','Permasalahan'],'<tbody id="fb"></tbody>','x').replace('<tbody><tbody id="fb"></tbody></tbody>','<tbody id="fb"></tbody>')}
+
+function vNC(){const R=S.nc;if(!R)return nod('NC');const hi=R.findIndex(r=>T(r,1)==='U R A I A N');if(hi<0)return nod('NC');const H=R[hi];
+ const side=(li,vi)=>{let h='';R.slice(hi+1).forEach(r=>{const l=T(r,li);if(!l)return;const v=[r[vi],r[vi+1],r[vi+2],r[vi+3]];if(!v.some(isN)){h+=`<tr class="hd"><td colspan="5">${esc(l)}</td></tr>`;return}
+  h+=`<tr class="${/^total/i.test(l)?'tt':''}"><td>${esc(l)}</td><td>${fj(v[0])}</td><td>${fj(v[1])}</td><td class="${v[2]<0?'neg':''}">${fj(v[2])}</td><td>${isN(v[3])?pc(v[3]*100):''}</td></tr>`});return tbl(['Uraian (Rp juta)',T(H,vi),T(H,vi+1),'Naik (turun)','%'],h)};
+ const g=(li,vi,re)=>{const r=R.find((x,i)=>i>hi&&re.test(T(x,li)));return r?{v:r[vi+1],d:r[vi+2]}:{}};
+ const as=g(1,2,/^TOTAL ASET/i),li=g(8,9,/^TOTAL LIABILITAS$/i),eq=g(8,9,/^Total Ekuitas/i),ks=g(1,2,/^Kas dan setara/i),pu=g(1,2,/^Piutang usaha/i),al=g(1,2,/^Total Aset Lancar/i),at=g(1,2,/^Nilai Buku Aset Tetap/i),tl=g(1,2,/^Total Aset Tidak Lancar/i);
+ PO.push(()=>{dn('c1',['Aset lancar','Aset tetap (nilai buku)','Aset tidak lancar lain'],[al.v,at.v,tl.v].map(x=>(x||0)/1e9));dn('c2',['Liabilitas','Ekuitas'],[li.v,eq.v].map(x=>(x||0)/1e9))});
+ const c=(t,o)=>kc(t,rp(o.v),dl(o.d).replace(/(\d[\d.]*)/,x=>rp(+x.replace(/\./g,'')))+' vs bulan lalu');
+ return `<div class="kg">${c('Total aset',as)}${c('Total liabilitas',li)}${c('Total ekuitas',eq)}${c('Kas dan setara kas',ks)}${c('Piutang usaha',pu)}</div>`
+ +`<div class="g2"><div class="cd"><h3>Komposisi aset (Rp miliar)</h3>${cv('c1')}</div><div class="cd"><h3>Liabilitas vs ekuitas (Rp miliar)</h3>${cv('c2')}</div></div>`
+ +`<h3 class="sh">Aset</h3>${side(1,2)}<h3 class="sh">Liabilitas dan ekuitas</h3>${side(8,9)}`}
+
+function vRS(){const R=S.rs;if(!R)return nod('RS');const hi=R.findIndex(r=>/^NO\.?$/i.test(T(r,1)));if(hi<0)return nod('RS');
+ const a=T(R[hi],5)||'Bulan lalu',b=T(R[hi],10)||'Bulan ini';let cur='',h='',pl=[];
+ R.slice(hi+1).forEach(r=>{const l=T(r,2);if(!l)return;if(/^RASIO/i.test(l)){cur=l;h+=`<h3 class="sh">${esc(l)}</h3><div class="kg">`;return}
+  if(!isN(r[7])&&!isN(r[12]))return;const x=(r[7]||0)*100,y=(r[12]||0)*100,low=/debt/i.test(l),dd=y-x,fv=low?dd<=0:dd>=0;if(/PROFIT/i.test(cur))pl.push([l.replace(/\s*\(%\)/,''),x,y]);
+  h+=kc(esc(l.replace(/\s*\(%\)/,'')),pc(y),`<span>${esc(a)}: ${pc(x)}</span><span class="bg ${Math.abs(dd)<.05?'':fv?'g':'b'}">${dd>=0?'+':''}${dd.toFixed(1).replace('.',',')} pp</span>`)});
+ PO.push(()=>bar('c1',pl.map(x=>x[0]),[[a,pl.map(x=>x[1])],[b,pl.map(x=>x[2])]]));
+ return h.replace(/(<h3 class="sh">[^<]*<\/h3><div class="kg">)(?![\s\S]*?<div class="k">)/,'')+(h?'</div>':'')+(pl.length?`<div class="cd"><h3>Rasio profitabilitas (%)</h3>${cv('c1')}</div>`:'')}
+
+const V=[['Ringkasan',vRing],['Laba Rugi',vLR],['Kontrak',vKt],['Tenaga Kerja',vTK],['Arus Kas',vCF],['Piutang',vAR],['Alat Berat',vAB],['Neraca',vNC],['Rasio',vRS]];
+function render(){CH.forEach(c=>c.destroy());CH=[];PO=[];const g=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+ window.TX=g('--tx');if(window.Chart){Chart.defaults.color=g('--mu');Chart.defaults.borderColor=g('--bd');if(window.ChartDataLabels&&!window.dlr){Chart.register(ChartDataLabels);window.dlr=1}}
+ P=String((S.ik||[]).flat().find(x=>/^BULAN /i.test(String(x||'').trim()))||'').trim();$('#pr').textContent=P;
+ $('#tabs').innerHTML=V.map((v,i)=>`<button data-t="${i}" class="${i==tab?'on':''}">${v[0]}</button>`).join('');
+ let html;try{html=V[tab][1]()}catch(e){html=`<div class="em">Tab ini gagal ditampilkan karena struktur sheet berbeda (${esc(e.message)}).</div>`}
+ $('#view').innerHTML=html;try{PO.forEach(f=>f())}catch(e){console.error(e)}}
+function go(f){if(!f)return;if(!window.XLSX){$('#st').textContent='Pustaka pembaca Excel gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.';return}
+ $('#st').textContent='Memuat '+f.name+'…';const rd=new FileReader();
+ rd.onload=e=>{try{load(e.target.result);const k=Object.keys(S);if(!k.length)throw new Error('tidak ada sheet yang dikenali (Ikhtisar, LR, LR KONTRAK, TK, CF, AR, AB, NC, RS)');$('#up').classList.add('mini');$('#st').textContent=f.name+' · '+k.length+' sheet terbaca';tab=0;render()}catch(x){$('#st').textContent='Gagal membaca file: '+x.message}};
+ rd.readAsArrayBuffer(f)}
+$('#fi').onchange=e=>go(e.target.files[0]);
+['dragover','drop'].forEach(t=>document.addEventListener(t,e=>{e.preventDefault();if(t==='drop')go(e.dataTransfer.files[0])}));
+document.addEventListener('click',e=>{const t=e.target.closest('[data-t]');if(t){tab=+t.dataset.t;render();scrollTo(0,0);return}const m=e.target.closest('[data-m]');if(m){mode=m.dataset.m;render()}});
+</script></body></html>
