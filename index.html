@@ -29,7 +29,7 @@ main{max-width:1200px;margin:0 auto;padding:16px}
 .bg.g{background:var(--gb);color:var(--g)}.bg.w{background:var(--wb);color:var(--w)}.bg.b{background:var(--bb);color:var(--b)}
 .g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-bottom:16px}
 .cd h3,.sh{margin:0 0 8px;font-size:14px}.sh{margin:18px 0 8px}.cv{position:relative;height:300px}
-.ng{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}.nc h4{margin:0 0 4px;color:var(--ac)}.nc p{margin:0}
+.ng{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:12px}.nw{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}.nb{min-width:0}.nb .kv{font-size:19px}.br{display:grid;grid-template-columns:58px 1fr auto;gap:6px;align-items:center;font-size:12px;margin-top:6px;color:var(--mu)}.br .pb{height:10px}.br b{color:var(--tx);min-width:78px;text-align:right}.nc h4{margin:0 0 4px;color:var(--ac)}.nc p{margin:0}
 .seg{display:inline-flex;border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:12px}
 .seg button{border:0;background:var(--cd);color:var(--tx);padding:7px 14px;font:inherit;cursor:pointer}.seg button.on{background:var(--ac);color:#fff}
 .tw{overflow-x:auto;background:var(--cd);border:1px solid var(--bd);border-radius:12px;margin-bottom:16px}
@@ -70,6 +70,11 @@ const cs=()=>{const g=n=>getComputedStyle(document.documentElement).getPropertyV
 const ch=(id,cfg)=>{const e=document.getElementById(id);if(e&&window.Chart)CH.push(new Chart(e,cfg))};
 const bar=(id,lb,ds,o)=>{o=o||{};const c=cs();ch(id,{type:o.t||'bar',data:{labels:lb,datasets:ds.map((d,i)=>({label:d[0],data:d[1],backgroundColor:c[i],borderColor:c[i],tension:.3,...(o.line===i?{type:'line'}:{})}))},options:{indexAxis:o.x,responsive:true,maintainAspectRatio:false,layout:{padding:{top:20,right:o.x?40:12}},plugins:{legend:{display:ds.length>1},datalabels:{color:o.st?'#fff':window.TX,anchor:o.st?'center':'end',align:o.st?'center':'end',clip:false,font:{size:11,weight:'600'},formatter:nf,display:c=>{const v=c.dataset.data[c.dataIndex];return isN(v)&&(o.st?Math.abs(v)>=0.5:v!==0)}}},scales:o.st?{x:{stacked:true},y:{stacked:true}}:{}}})};
 const dn=(id,lb,d)=>ch(id,{type:'doughnut',data:{labels:lb,datasets:[{data:d,backgroundColor:cs(),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'},datalabels:{color:'#fff',font:{size:11,weight:'700'},formatter:(v,c)=>nf(v)+' ('+(v/c.dataset.data.reduce((a,b)=>a+b,0)*100).toFixed(0)+'%)',display:c=>{const d=c.dataset.data;return d[c.dataIndex]/d.reduce((a,b)=>a+b,0)>=0.05}}}}});
+const nar=(t,s)=>{const re=/sebesar Rp\. ([\d.]+) atau (\d+)% dari anggaran sebesar Rp\. ([\d.]+) dan (\d+)% dari realisasi tahun lalu sebesar Rp\. ([\d.]+)/g,m=[...s.matchAll(re)];if(m.length<2)return`<div class="nc"><h4>${esc(t)}</h4><p>${hl(s)}</p></div>`;
+ const co=/BIAYA/i.test(t),n=x=>+x.replace(/\./g,'');
+ const blk=(l,x)=>{const a=n(x[3]),r=n(x[1]),y=n(x[5]),mx=Math.max(a,r,y)||1,row=(k,v,c)=>`<div class="br"><span>${k}</span><div class="pb"><i style="width:${v/mx*100}%;background:${c}"></i></div><b>${rp(v)}</b></div>`;
+  return`<div class="nb"><div class="kt">${l}</div><div class="kv">${rp(r)}</div>${row('Anggaran',a,'var(--c3)')}${row('Realisasi',r,'var(--c1)')}${row('Thn lalu',y,'var(--c2)')}<div class="kr"><span>dari anggaran</span>${bd(+x[2],co)}</div><div class="kr"><span>dari tahun lalu</span>${bd(+x[4],co)}</div></div>`};
+ return`<div class="nc"><h4>${esc(t)}</h4><div class="nw">${blk('Bulan ini',m[0])}${blk('s.d. bulan ini',m[1])}</div></div>`};
 const nf=v=>isN(v)?(Math.abs(v)>=100?Math.round(v).toLocaleString('id-ID'):v.toLocaleString('id-ID',{maximumFractionDigits:2})):'';
 const hl=s=>esc(s).replace(/(Rp\. [\d.]+)/g,'<b>$1</b>').replace(/(\d+%)/g,'<b>$1</b>');
 
@@ -84,9 +89,9 @@ const KP=[['Pendapatan',/^TOTAL PENDAPATAN/i],['Beban Pokok Pendapatan',/^TOTAL 
 function vRing(){if(!S.lr)return nod('LR');let k='';const lb=[],a=[],b=[],c=[];
  KP.forEach(([t,re,co])=>{const o=pick(lrRow(re),mode);if(!isN(o.re))return;lb.push(t);a.push(o.rk/1e9);b.push(o.re/1e9);c.push(o.ly/1e9);
   k+=`<div class="k"><div class="kt">${t}</div><div class="kv">${rp(o.re)}</div><div class="pb"><i style="width:${Math.min(o.p||0,100)}%"></i></div><div class="kr"><span>vs RKAP ${rp(o.rk)}</span>${bd(o.p,co)}</div><div class="kr"><span>vs tahun lalu ${rp(o.ly)}</span>${bd(o.pl,co)}</div></div>`});
- let n='',t=null;(S.ik||[]).forEach(r=>{const s=typeof r[2]==='string'?r[2].trim():'';if(!s)return;if(/^Realisasi/.test(s)&&t){n+=`<div class="nc"><h4>${esc(t)}</h4><p>${hl(s)}</p></div>`;t=null}else if(s===s.toUpperCase()&&s.length<40&&!/^BULAN|^PT/.test(s))t=s});
+ let n='',t=null;(S.ik||[]).forEach(r=>{const s=typeof r[2]==='string'?r[2].trim():'';if(!s)return;if(/^Realisasi/.test(s)&&t){n+=nar(t,s);t=null}else if(s===s.toUpperCase()&&s.length<40&&!/^BULAN|^PT/.test(s))t=s});
  PO.push(()=>bar('c1',lb,[['RKAP',a],['Realisasi',b],['Tahun lalu',c]]));
- return seg()+`<div class="kg">${k}</div><div class="cd"><h3>RKAP vs Realisasi vs Tahun Lalu (Rp miliar)</h3>${cv('c1')}</div>`+(n?`<h3 class="sh">Narasi Ikhtisar Kinerja</h3><div class="ng">${n}</div>`:'')}
+ return seg()+`<div class="kg">${k}</div><div class="cd"><h3>RKAP vs Realisasi vs Tahun Lalu (Rp miliar)</h3>${cv('c1')}</div>`+(n?`<h3 class="sh">Ikhtisar Kinerja: Anggaran vs Realisasi vs Tahun Lalu</h3><div class="ng">${n}</div>`:'')}
 
 function segRows(R,st){const i=R.findIndex(r=>T(r,0)===st),o=[];if(i<0)return o;for(let j=i+1;j<R.length&&!/^TOTAL/i.test(T(R[j],0));j++)if(isN(R[j][1]))o.push(R[j]);return o}
 function vLR(){const R=S.lr;if(!R)return nod('LR');const o=mode==='m'?2:7;let h='';
